@@ -1,0 +1,61 @@
+---
+layout: null
+permalink: /
+---
+
+<!doctype html>
+<html lang="en" ng-app="rootApp" ng-controller="rootCtrl">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- Bootstrap core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Animation CSS -->
+    <link href="bower_components/animate.css/animate.min.css" rel="stylesheet">
+    <link href="bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="font/font-mfizz/font-mfizz.css" rel="stylesheet">
+    <link href="bower_components/angular-toastr/dist/angular-toastr.min.css" rel="stylesheet">
+
+    <link href="bower_components/summernote/dist/summernote.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- ===Scripts=== -->
+    <!-- Mainly scripts -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Angularjs scripts -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
+    <!--<script src="bower_components/angular-scroll/angular-scroll.min.js"></script>-->
+    <!-- Third part sctipts -->
+    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="bower_components/PACE/pace.min.js"></script>
+    <script src="bower_components/wow/dist/wow.min.js"></script>
+    <script src="bower_components/summernote/dist/summernote.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers/blog.js"></script>
+    <script src="js/controllers/user.js"></script>
+    <script src="js/services/blog.js"></script>
+    <!--<script src="js/directives/directive.js"></script>-->
+</head>
+
+<body ng-class="{'landing-page': landing_page, 'gray-bg': gray_bg}" id="page-top">
+<div ui-view></div>
+</body>
+</html>

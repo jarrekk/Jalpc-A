@@ -1,0 +1,43 @@
+<div>
+    <div class="middle-box text-center loginscreen animated fadeInDown" ng-controller="registerCtrl">
+        <div>
+            <div>
+                <h1 class="logo-name">IN+</h1>
+            </div>
+            <h3>Register to IN+</h3>
+            <p>Create account to see it in action.</p>
+            <form class="m-t" role="form" novalidate name="registerForm" ng-submit="submitForm(registerForm.$valid)">
+                <div class="form-group" ng-class="{ 'has-error' : registerForm.username.$invalid && !registerForm.username.$pristine && registerForm.username.$dirty}">
+                    <input type="text" name="username" class="form-control" placeholder="Name" ng-required="true" ng-model="username" ng-minlength="4" ng-maxlength="10">
+                    <div ng-show="registerForm.$submitted || registerForm.username.$touched">
+                        <p ng-show="registerForm.username.$error.required" class="help-block">Username is required.</p>
+                        <p ng-show="registerForm.username.$error.minlength" class="help-block">Username is too short.</p>
+                        <p ng-show="registerForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : registerForm.email.$invalid && !registerForm.email.$pristine && registerForm.email.$dirty}">
+                    <input type="email" name="email" class="form-control" placeholder="Email" ng-required="true" ng-model="email">
+                    <div ng-show="registerForm.$submitted || registerForm.email.$touched">
+                        <p ng-show="registerForm.email.$error.required" class="help-block">Email is required.</p>
+                        <p ng-show="registerForm.email.$invalid && !registerForm.email.$pristine" class="help-block">Email is invalid.</p>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : registerForm.password.$invalid && !registerForm.password.$pristine && registerForm.password.$dirty}">
+                    <input type="password" name="password" class="form-control" placeholder="Password" ng-required="true" ng-model="password" ng-minlength="8" ng-maxlength="16">
+                    <div ng-show="registerForm.$submitted || registerForm.password.$touched">
+                        <p ng-show="registerForm.password.$error.required" class="help-block">Password is required.</p>
+                        <p ng-show="registerForm.password.$error.minlength" class="help-block">Password is too short.</p>
+                        <p ng-show="registerForm.password.$error.maxlength" class="help-block">Password is too long.</p>
+                    </div>
+                </div>
+                <!--<div class="form-group">-->
+                <!--<div class="checkbox i-checks"><label> <input type="checkbox" required=""><i></i> Agree the policy </label></div>-->
+                <!--</div>-->
+                <button type="submit" class="btn btn-info block full-width m-b" ng-disabled="registerForm.$invalid">Register</button>
+            </form>
+            <p class="text-muted text-center"><small>Already have an account?</small></p>
+            <a class="btn btn-sm btn-white btn-block" ui-sref="user.login">Login</a>
+            <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
+        </div>
+    </div>
+</div>
