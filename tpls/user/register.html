@@ -2,9 +2,9 @@
     <div class="middle-box text-center loginscreen animated fadeInDown" ng-controller="registerCtrl">
         <div>
             <div>
-                <h1 class="logo-name">IN+</h1>
+                <h1 class="logo-name">10<sup>9</sup>L</h1>
             </div>
-            <h3>Register to IN+</h3>
+            <h3>Register to 10<sup>9</sup> LOTTERY</h3>
             <p>Create account to see it in action.</p>
             <form class="m-t" role="form" novalidate name="registerForm" ng-submit="submitForm(registerForm.$valid)">
                 <div class="form-group" ng-class="{ 'has-error' : registerForm.username.$invalid && !registerForm.username.$pristine && registerForm.username.$dirty}">
@@ -30,14 +30,15 @@
                         <p ng-show="registerForm.password.$error.maxlength" class="help-block">Password is too long.</p>
                     </div>
                 </div>
-                <!--<div class="form-group">-->
-                <!--<div class="checkbox i-checks"><label> <input type="checkbox" required=""><i></i> Agree the policy </label></div>-->
-                <!--</div>-->
+                <div class="checkbox" ng-class="{ 'has-error' : registerForm.agree.$invalid && !registerForm.agree.$pristine && registerForm.agree.$dirty}">
+                    <input type="checkbox" ng-model="agree" required>
+                    <label>Agree the terms and policy</label>
+                </div>
                 <button type="submit" class="btn btn-info block full-width m-b" ng-disabled="registerForm.$invalid">Register</button>
             </form>
             <p class="text-muted text-center"><small>Already have an account?</small></p>
             <a class="btn btn-sm btn-white btn-block" ui-sref="user.login">Login</a>
-            <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
+            <p class="m-t"> <small>10<sup>9</sup> LOTTERY &copy; 2015</small> </p>
         </div>
     </div>
 </div>

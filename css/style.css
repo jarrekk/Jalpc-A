@@ -8229,3 +8229,9 @@ body.md-skin {
     margin: 0;
   }
 }
+.navbar .nav > li .dropdown-menu {
+  margin: 0;
+}
+.navbar .nav > li:hover .dropdown-menu {
+  display: block;
+}

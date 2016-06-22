@@ -11,11 +11,29 @@ blogModelService.factory('utils', function () {
                 if (a[i].objectId == id) return a[i];
             }
             return null;
+        },
+        deletebyId: function deletebyId(a, id) {
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].objectId == id) {
+                    a.splice(i, 1);
+                    return a;
+                }
+            }
+            return null;
+        },
+        editbyId: function editbyId(a, id, obj) {
+            for (var i = 0; i < a.length; i++){
+                if (a[i].objectId == id) {
+                    a[i] = obj;
+                    return a;
+                }
+            }
+            return null;
         }
     };
 });
 
-blogModelService.factory('blogs', function ($rootScope, $http, utils) {
+blogModelService.factory('blogs', function ($rootScope, $http) {
     var req = {
         method: 'GET',
         url: 'https://api.leancloud.cn/1.1/classes/Blog',
@@ -30,14 +48,10 @@ blogModelService.factory('blogs', function ($rootScope, $http, utils) {
         return resp.data.results;
     });
 
-    var factory = {};
-    factory.all = function () {
-        return blogs;
-    };
-    factory.get = function (id) {
-        return blogs.then(function(){
-            return utils.findById(blogs, id);
-        })
-    };
-    return factory;
+    return {
+        all: function all() {
+            if (blogs) return blogs;
+            return null;
+        }
+    }
 });

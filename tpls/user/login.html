@@ -2,15 +2,13 @@
     <div class="middle-box text-center loginscreen animated fadeInDown" ng-controller="loginCtrl">
         <div>
             <div>
-                <h1 class="logo-name">IN+</h1>
+                <h1 class="logo-name">10<sup>9</sup>L</h1>
             </div>
-            <h3>Welcome to IN+</h3>
-            <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-            </p>
+            <h3>Welcome to 10<sup>9</sup> LOTTERY</h3>
             <p>Login in. To see it in action.</p>
             <form class="m-t" role="form" novalidate name="loginForm" ng-submit="submitForm(loginForm.$valid)">
                 <div class="form-group" ng-class="{ 'has-error' : loginForm.username.$invalid && !loginForm.username.$pristine && loginForm.username.$dirty}">
-                    <input type="username" name="username" class="form-control" placeholder="Username" ng-required="true" ng-model="username">
+                    <input type="text" name="username" class="form-control" placeholder="Username" ng-required="true" ng-model="username">
                     <div ng-show="loginForm.$submitted || loginForm.username.$touched">
                         <p ng-show="loginForm.username.$error.required" class="help-block">Username is required.</p>
                         <p ng-show="loginForm.username.$invalid && !loginForm.username.$pristine" class="help-block">Username is invalid.</p>
@@ -27,7 +25,7 @@
             <a ui-sref="user.forgotpassword"><small>Forgot password?</small></a>
             <p class="text-muted text-center"><small>Do not have an account?</small></p>
             <a class="btn btn-sm btn-white btn-block" ui-sref="user.register">Create an account</a>
-            <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
+            <p class="m-t"> <small>10<sup>9</sup> LOTTERY &copy; 2015</small> </p>
         </div>
     </div>
 </div>

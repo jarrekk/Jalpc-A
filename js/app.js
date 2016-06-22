@@ -7,34 +7,37 @@ var rootApp = angular.module('rootApp', [
     'indexModelCtrl',
     'userModelCtrl',
     'blogModelCtrl',
+    'userModelService',
     'blogModelService',
     'uiRouter',
     'uiRouter.blogs',
+    'ngAnimate',
     'summernote',
     'ui.router',
     'ngCookies',
     'toastr',
+    'monospaced.qrcode'
 ])
-.run(function ($rootScope, $state, $stateParams, $anchorScroll) {
-    $rootScope.message_title = 'Celine Blog';
-    $rootScope.AdminId = '5764eff42e958a00581a6fd2';
-    $rootScope.$state = $state;
-    $rootScope.$stateParams = $stateParams;
+.run(function ($rootScope, $state, $stateParams, $anchorScroll, $cookies) {
     $rootScope.LeanCloudId = 'vAMFua5yim32gEb0BgyaUPtw-gzGzoHsz';
     $rootScope.LeanCloudKey = 'nsyfA4qrY3UQsOe7JP6xvUxo';
-    $rootScope.$on("$stateChangeSuccess",  function(event, toState, toParams, fromState, fromParams) {
-        $rootScope.previousState_name = fromState.name;
-        $rootScope.previousState_params = fromParams;
+    $rootScope.message_title = 'Celine Blog';
+    $rootScope.Admin = 'Celine';
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
+    $rootScope.$on("$stateChangeSuccess",  function(event, to, toParams, from, fromParams) {
+        from.name && $cookies.put('PreviousStateName', from.name);
+        fromParams && $cookies.put('PreviousParamsName', JSON.stringify(fromParams));
         $anchorScroll();
     });
     $rootScope.back = function() {
-        $state.go($rootScope.previousState_name,$rootScope.previousState_params);
+        $state.go($cookies.get('PreviousStateName'), JSON.parse($cookies.get('PreviousParamsName')));
     };
 })
-.config(['$interpolateProvider', function ($interpolateProvider) {
+.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{$');
     $interpolateProvider.endSymbol('$}');
-}]);
+});
 
 rootApp.controller('rootCtrl', function ($rootScope) {
     $rootScope.landing_page = false;
@@ -82,26 +85,19 @@ angular.module('uiRouter', ['ui.router'])
         })
 });
 
-angular.module('uiRouter.blogs', ['ui.router', 'ngSanitize'])
+angular.module('uiRouter.blogs', ['ui.router', 'ngSanitize', 'toastr'])
 .config(function ($stateProvider, $urlRouterProvider) {
-    // $urlRouterProvider.otherwise('/');
     $stateProvider
         .state('blogs', {
-            // abstract: true,
+            abstract: true,
             url: '/blogs',
             templateUrl: 'tpls/blog/blog.html',
+            resolve: {
+                blogs: function (blogs) {
+                        return blogs.all();
+                    }
+            },
             controller: 'blogsCtrl'
-            // resolve: {
-            //     blogs: ['blogs',
-            //         function (blogs) {
-            //             return blogs.all();
-            //         }]
-            // },
-            // controller:
-            //     function ($scope, $rootScope, blogs) {
-            //         $rootScope.landing_page = true;
-            //         $scope.blogs = blogs;
-            //     }
         })
         .state('blogs.add', {
             url: '/add',
@@ -117,5 +113,9 @@ angular.module('uiRouter.blogs', ['ui.router', 'ngSanitize'])
             url: '/edit/{blogId:[0-9a-z]{24}}',
             templateUrl: 'tpls/blog/blog_edit.html',
             controller: 'editblogCtrl'
+        })
+        .state('blogs.list', {
+            url: '',
+            templateUrl: 'tpls/blog/blog_list.html'
         })
 });

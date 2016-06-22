@@ -23,18 +23,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-10 col-md-offset-1">
-                                    <summernote height="525" ng-model="summernote_text"
-                                                class="form-control"></summernote>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-offset-8 col-md-4">
-                                        <p ng-class="{'text-danger': return_error, 'text-success': return_success}">{$
-                                            return_message $}</p>
-                                    </div>
+                                    <summernote height="525" class="form-control" ng-model="summernote_text"></summernote>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-offset-8 col-md-1">
-                                        <a type="button" class="btn btn-rounded btn-warning btn-outline">Cancel</a>
+                                        <a type="button" ui-sref="blogs.list" class="btn btn-rounded btn-warning btn-outline">Cancel</a>
                                     </div>
                                     <div class="col-md-1">
                                         <button type="submit" class="btn btn-rounded btn-info btn-outline">Submit

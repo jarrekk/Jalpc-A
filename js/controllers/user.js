@@ -16,10 +16,8 @@ var userModelCtrl = angular.module('userModelCtrl', [
     'toastr'
 ]);
 
-userModelCtrl.controller('loginCtrl', function ($scope, $rootScope, $http, $cookies, $state, toastr) {
-    if ($cookies.get('SessionToken')) {
-        $rootScope.back();
-    }
+userModelCtrl.controller('loginCtrl', function ($scope, $rootScope, $http, $cookies, $state, $timeout, toastr) {
+    $cookies.get('SessionToken') && $rootScope.back();
     $rootScope.gray_bg = true;
     $scope.submitForm = function(isValid) {
         if (isValid) {
@@ -38,12 +36,10 @@ userModelCtrl.controller('loginCtrl', function ($scope, $rootScope, $http, $cook
             };
             $http(req).then(function successCallback(resp){
                 $cookies.put('SessionToken', resp.data.sessionToken);
-                $cookies.put('UserId', resp.data.objectId);
-                $cookies.put('username', resp.data.username);
                 toastr.success('Welcome back! ' + resp.data.username, $rootScope.message_title);
-                window.setTimeout(function() {
-                    $state.go('index');
-                }, 2000);
+                $timeout(function () {
+                    $rootScope.back();
+                }, 1500);
             }, function errorCallback(resp) {
                 toastr.error(resp.data.error, $rootScope.message_title);
             });
@@ -51,10 +47,8 @@ userModelCtrl.controller('loginCtrl', function ($scope, $rootScope, $http, $cook
     }
 });
 
-userModelCtrl.controller('registerCtrl', function ($scope, $rootScope, $http, $cookies, $state, toastr) {
-    if ($cookies.get('SessionToken')) {
-        $rootScope.back();
-    }
+userModelCtrl.controller('registerCtrl', function ($scope, $rootScope, $http, $cookies, $state, $timeout, toastr) {
+    $cookies.get('SessionToken') && $rootScope.back();
     $rootScope.gray_bg = true;
     $scope.submitForm = function(isValid) {
         if (isValid) {
@@ -74,9 +68,9 @@ userModelCtrl.controller('registerCtrl', function ($scope, $rootScope, $http, $c
             };
             $http(req).then(function successCallback(){
                 toastr.success('Success! You have received a email, please confirm it.', $rootScope.message_title);
-                window.setTimeout(function() {
+                $timeout(function () {
                     $state.go('user.login');
-                }, 2000);
+                }, 1500);
             }, function errorCallback(resp){
                 toastr.error(resp.data.error, $rootScope.message_title);
             });
@@ -84,10 +78,8 @@ userModelCtrl.controller('registerCtrl', function ($scope, $rootScope, $http, $c
     };
 });
 
-userModelCtrl.controller('forgotpasswordCtrl', function ($scope, $rootScope, $cookies, $http, $state, toastr) {
-    if ($cookies.get('SessionToken')) {
-        $rootScope.back();
-    }
+userModelCtrl.controller('forgotpasswordCtrl', function ($scope, $rootScope, $cookies, $http, $state, $timeout, toastr) {
+    $cookies.get('SessionToken') && $rootScope.back();
     $rootScope.gray_bg = true;
     $scope.submitForm = function(isValid) {
         if (isValid) {
@@ -103,9 +95,9 @@ userModelCtrl.controller('forgotpasswordCtrl', function ($scope, $rootScope, $co
             };
             $http(req).then(function successCallback(){
                 toastr.success('Success! You have received a email, please confirm it.', $rootScope.message_title);
-                window.setTimeout(function() {
+                $timeout(function () {
                     $state.go('user.login');
-                }, 2000);
+                }, 1500);
             }, function errorCallback(resp){
                 toastr.error(resp.data.error, $rootScope.message_title);
             });
@@ -113,57 +105,43 @@ userModelCtrl.controller('forgotpasswordCtrl', function ($scope, $rootScope, $co
     };
 });
 
-userModelCtrl.controller('resetpasswordCtrl', function ($scope, $rootScope, $http, $cookies, $state, toastr) {
-    if (!$cookies.get('SessionToken')) {
-        $rootScope.back();
-    }
+userModelCtrl.controller('resetpasswordCtrl', function ($scope, $rootScope, $http, $cookies, $state, $timeout, toastr, user) {
+    $cookies.get('SessionToken') || $rootScope.back();
     $rootScope.gray_bg = true;
     $scope.submitForm = function(isValid) {
         if (isValid) {
-
-            var req1 = {
-                method: 'GET',
-                url: 'https://api.leancloud.cn/1.1/users/me',
-                headers: {
-                    'X-LC-Id': $rootScope.LeanCloudId,
-                    'X-LC-Key': $rootScope.LeanCloudKey,
-                    'X-LC-Session': $cookies.get('SessionToken')
-                }
-            };
-            $http(req1).then(function successCallback(resp){
-                $scope.$apply(function () {
-                    $scope.ObjId = resp.data.objectId;
-                })
-            }, function errorCallback(resp) {
-                $scope.return_error = true;
-                $scope.return_message = resp.data.error;
-            });
-
-            var req = {
-                method: 'PUT',
-                url: 'https://api.leancloud.cn/1.1/users/' + $scope.ObjId + '/updatePassword',
-                headers: {
-                    'X-LC-Id': $rootScope.LeanCloudId,
-                    'X-LC-Key': $rootScope.LeanCloudKey,
-                    'X-LC-Session': $cookies.get('SessionToken'),
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    'old_password': $scope.old_password,
-                    'new_password': $scope.new_password2
-                }
-            };
-            $http(req).then(function successCallback(){
-                toastr.success('Success! Please login again.', $rootScope.message_title);
-                $cookies.remove('SessionToken');
-                $cookies.remove('UserId');
-                $cookies.remove('username');
-                window.setTimeout(function() {
-                    $state.go('user.login');
-                }, 2000);
-            }, function errorCallback(resp){
+            user.UserInfo().then(function (resp) {
+                $scope.username = resp.data.username;
+            }).then(function () {
+                var req = {
+                    method: 'PUT',
+                    url: 'https://api.leancloud.cn/1.1/users/' + resp.data.objectId + '/updatePassword',
+                    headers: {
+                        'X-LC-Id': $rootScope.LeanCloudId,
+                        'X-LC-Key': $rootScope.LeanCloudKey,
+                        'X-LC-Session': $cookies.get('SessionToken'),
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        'old_password': $scope.old_password,
+                        'new_password': $scope.new_password2
+                    }
+                };
+                $http(req).then(function successCallback(){
+                    toastr.success('Success! Please login again.', $rootScope.message_title);
+                    $cookies.remove('SessionToken');
+                    $timeout(function () {
+                        $state.go('user.login');
+                    }, 1500);
+                }, function errorCallback(resp){
+                    $scope.old_password = "";
+                    $scope.new_password1 = "";
+                    $scope.new_password2 = "";
+                    toastr.error(resp.data.error, $rootScope.message_title);
+                });
+            }, function (resp) {
                 toastr.error(resp.data.error, $rootScope.message_title);
-            });
+            })
         }
     };
 });
