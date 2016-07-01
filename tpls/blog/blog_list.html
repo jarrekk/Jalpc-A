@@ -14,7 +14,7 @@
                                 <div class="vote-item" ng-repeat="blog in blogs">
                                     <div class="row">
                                         <div class="col-md-10">
-                                            <a ui-sref="blogs.detail({blogId:blog.objectId})" class="vote-title">{$ blog.title $}</a>
+                                            <a data-target="#angularjs" ui-sref="blogs.detail({blogId:blog.objectId})" class="vote-title">{$ blog.title $}</a>
                                             <div class="vote-info">
                                                 <i class="fa fa-clock-o"></i> <a href="#" onclick="return false;">{$ blog.createdAt | date:'fullDate' $}</a>
                                                 <i class="fa fa-user"></i> <a href="#" onclick="return false;">Celine</a>

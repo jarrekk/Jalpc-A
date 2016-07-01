@@ -54,6 +54,12 @@ A configuration tweak if you're using a gh-pages sub-folder
 
 Rename the repository to `<your githubname>.github.io` and create a branch named `gh-pages` then you will get a **https** website: `https://<your githubname>.github.io`.
 
+## Features
+
+### Login with github
+
+You can login with github account,the web application use leancloud engine to realize it.when you logined in,your username in my blog is `gh_<your_github_username>`.
+
 ### Web analytics
 
 I use [Google analytics](https://www.google.com/analytics/) to do web analytics, you can register an account and apply an application, just replace the javascript code in `website.html`.
@@ -61,6 +67,7 @@ I use [Google analytics](https://www.google.com/analytics/) to do web analytics,
 ### Rich Text Editor
 
 I use [summernote](https://github.com/summernote/angular-summernote) to generate a rich text editor at web page,you can write many styles of words and add pictures, videos and so on.It's very easy to write an article.
+> When you want to upload an image,the image will be uploaded to a background platform(qiniu cloud service).
 
 ### Share
 
@@ -69,6 +76,7 @@ Every blog, I generate a QRCode image with [angular-qrcode](https://github.com/m
 ### Comment
 
 * Login and comment
+* Also summernote editor
 * Reply to others' comments
 * Delete your previous comments
 
@@ -79,6 +87,8 @@ Since the project is **open source**, we must consider user's username and passw
 ![connect](connect.png)
 
 Client get the web application files(html,css,js),the push requrst to Leancloud, now both connect use https and Angularjs only save user's token on brower.
+
+##
 
 ### To Do
 

@@ -15,19 +15,57 @@ var rootApp = angular.module('rootApp', [
     'summernote',
     'ui.router',
     'ngCookies',
+    'ngResource',
     'toastr',
     'monospaced.qrcode'
 ])
-.run(function ($rootScope, $state, $stateParams, $anchorScroll, $cookies) {
+.run(function ($rootScope, $state, $stateParams, $http, $location, $anchorScroll, $cookies, toastr) {
     $rootScope.LeanCloudId = 'vAMFua5yim32gEb0BgyaUPtw-gzGzoHsz';
     $rootScope.LeanCloudKey = 'nsyfA4qrY3UQsOe7JP6xvUxo';
+    $rootScope.domain = 'https://api.leancloud.cn/1.1';
     $rootScope.message_title = 'Celine Blog';
     $rootScope.Admin = 'Celine';
+    $rootScope.AdminId = '5764eff42e958a00581a6fd2';
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.$on("$stateChangeSuccess",  function(event, to, toParams, from, fromParams) {
+        var github_callback = $location.absUrl().match(/code=(\w{20})/i);
+        if (github_callback != null && !$cookies.get('SessionToken')) {
+            // for local test
+            //var url =  "http://localhost:3000/api/github?code=" + github_callback[1] + "&callback=JSON_CALLBACK";
+            var url =  "http://jalpc-a.leanapp.cn/api/github?code=" + github_callback[1] + "&callback=JSON_CALLBACK";
+            $http.jsonp(url).success(function (data) {
+                //console.log(data);
+                if (data.status == 200) {
+                    var username = 'gh_' + data.login;
+                    var req = {
+                    method: 'POST',
+                    url: $rootScope.domain + '/users',
+                    headers: {
+                        'X-LC-Id': $rootScope.LeanCloudId,
+                        'X-LC-Key': $rootScope.LeanCloudKey,
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        "authData": {
+                            "github": {
+                                "uid": data.id.toString(),
+                                "username": username
+                            }
+                        }
+                    }};
+                    $http(req).then(function successCallback(resp){
+                        $cookies.put('SessionToken', resp.data.sessionToken);
+                        toastr.success('Welcome Github user! ' + username, $rootScope.message_title);
+                    }, function errorCallback(resp){
+                        toastr.error(resp.data.error, $rootScope.message_title);
+                    });
+                }
+            });
+        }
         from.name && $cookies.put('PreviousStateName', from.name);
         fromParams && $cookies.put('PreviousParamsName', JSON.stringify(fromParams));
+        //$location.hash('top');
         $anchorScroll();
     });
     $rootScope.back = function() {
@@ -42,6 +80,12 @@ var rootApp = angular.module('rootApp', [
 rootApp.controller('rootCtrl', function ($rootScope) {
     $rootScope.landing_page = false;
     $rootScope.gray_bg = false;
+});
+
+rootApp.filter("sanitize", function($sce) {
+    return function(htmlCode){
+    return $sce.trustAsHtml(htmlCode);
+  }
 });
 
 angular.module('uiRouter', ['ui.router'])

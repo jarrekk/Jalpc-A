@@ -9,27 +9,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" ui-sref="index">10<sup>9</sup> LOTTERY</a>
+                <a class="navbar-brand" data-target="#angularjs" ui-sref="index">10<sup>9</sup> LOTTERY</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a class="page-scroll" ui-sref="index">Home</a></li>
-                    <li><a class="page-scroll" ui-sref="blogs">Blogs</a></li>
+                    <li><a data-target="#angularjs" ui-sref="index">Home</a></li>
+                    <li><a data-target="#angularjs" ui-sref="blogs.list">Blogs</a></li>
                     <li class="dropdown" ng-if="username">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="/#" onclick="return false;">{$ username $}<strong class="caret"></strong></a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" onclick="return false;">{$ username $}<strong class="caret"></strong></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a ui-sref="blogs.add" style="color: #19aa8d;">Add Blog</a>
+                            <li ng-show="add">
+                                <a data-target="#angularjs" ui-sref="blogs.add" style="color: #19aa8d;">Add Blog</a>
                             </li>
                             <li>
-                                <a ui-sref="user.resetpassword" style="color: #19aa8d;">Reset Password</a>
+                                <a data-target="#angularjs" ui-sref="user.resetpassword" style="color: #19aa8d;">Reset Password</a>
                             </li>
                             <li>
-                                <a ng-click="logout()" style="color: #19aa8d;">Logout</a>
+                                <a data-target="#angularjs" ng-click="logout()" style="color: #19aa8d;">Logout</a>
                             </li>
                         </ul>
                     </li>
-                    <li ng-if="!username"><a class="page-scroll" ui-sref="user.login">Login</a></li>
+                    <li ng-if="!username"><a class="page-scroll" data-target="#angularjs" ui-sref="user.login">Login</a></li>
                 </ul>
             </div>
         </div>

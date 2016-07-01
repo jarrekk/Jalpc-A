@@ -22,18 +22,17 @@ userModelCtrl.controller('loginCtrl', function ($scope, $rootScope, $http, $cook
     $scope.submitForm = function(isValid) {
         if (isValid) {
             var req = {
-                method: 'GET',
-                url: 'https://leancloud.cn:443/1.1/login',
-                headers: {
-                    'X-LC-Id': $rootScope.LeanCloudId,
-                    'X-LC-Key': $rootScope.LeanCloudKey,
-                    'Content-Type': 'application/json'
-                },
-                params: {
-                    'username': $scope.username,
-                    'password': $scope.password
-                }
-            };
+            method: 'GET',
+            url: 'https://leancloud.cn:443/1.1/login',
+            headers: {
+                'X-LC-Id': $rootScope.LeanCloudId,
+                'X-LC-Key': $rootScope.LeanCloudKey,
+                'Content-Type': 'application/json'
+            },
+            params: {
+                'username': $scope.username,
+                'password': $scope.password
+            }};
             $http(req).then(function successCallback(resp){
                 $cookies.put('SessionToken', resp.data.sessionToken);
                 toastr.success('Welcome back! ' + resp.data.username, $rootScope.message_title);
@@ -53,19 +52,18 @@ userModelCtrl.controller('registerCtrl', function ($scope, $rootScope, $http, $c
     $scope.submitForm = function(isValid) {
         if (isValid) {
             var req = {
-                method: 'POST',
-                url: 'https://api.leancloud.cn/1.1/users',
-                headers: {
-                    'X-LC-Id': $rootScope.LeanCloudId,
-                    'X-LC-Key': $rootScope.LeanCloudKey,
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    'username': $scope.username,
-                    'email': $scope.email,
-                    'password': $scope.password
-                }
-            };
+            method: 'POST',
+            url: $rootScope.domain + '/users',
+            headers: {
+                'X-LC-Id': $rootScope.LeanCloudId,
+                'X-LC-Key': $rootScope.LeanCloudKey,
+                'Content-Type': 'application/json'
+            },
+            data: {
+                'username': $scope.username,
+                'email': $scope.email,
+                'password': $scope.password
+            }};
             $http(req).then(function successCallback(){
                 toastr.success('Success! You have received a email, please confirm it.', $rootScope.message_title);
                 $timeout(function () {
@@ -84,15 +82,14 @@ userModelCtrl.controller('forgotpasswordCtrl', function ($scope, $rootScope, $co
     $scope.submitForm = function(isValid) {
         if (isValid) {
             var req = {
-                method: 'POST',
-                url: 'https://api.leancloud.cn/1.1/requestPasswordReset',
-                headers: {
-                    'X-LC-Id': $rootScope.LeanCloudId,
-                    'X-LC-Key': $rootScope.LeanCloudKey,
-                    'Content-Type': 'application/json'
-                },
-                data: {'email': $scope.email}
-            };
+            method: 'POST',
+            url: $rootScope.domain + '/requestPasswordReset',
+            headers: {
+                'X-LC-Id': $rootScope.LeanCloudId,
+                'X-LC-Key': $rootScope.LeanCloudKey,
+                'Content-Type': 'application/json'
+            },
+            data: {'email': $scope.email}};
             $http(req).then(function successCallback(){
                 toastr.success('Success! You have received a email, please confirm it.', $rootScope.message_title);
                 $timeout(function () {
@@ -108,25 +105,28 @@ userModelCtrl.controller('forgotpasswordCtrl', function ($scope, $rootScope, $co
 userModelCtrl.controller('resetpasswordCtrl', function ($scope, $rootScope, $http, $cookies, $state, $timeout, toastr, user) {
     $cookies.get('SessionToken') || $rootScope.back();
     $rootScope.gray_bg = true;
+    $scope.GoBack = function() {
+        $rootScope.back();
+    };
     $scope.submitForm = function(isValid) {
         if (isValid) {
             user.UserInfo().then(function (resp) {
-                $scope.username = resp.data.username;
+                resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
+                //$scope.username = resp.data.username;
             }).then(function () {
                 var req = {
-                    method: 'PUT',
-                    url: 'https://api.leancloud.cn/1.1/users/' + resp.data.objectId + '/updatePassword',
-                    headers: {
-                        'X-LC-Id': $rootScope.LeanCloudId,
-                        'X-LC-Key': $rootScope.LeanCloudKey,
-                        'X-LC-Session': $cookies.get('SessionToken'),
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        'old_password': $scope.old_password,
-                        'new_password': $scope.new_password2
-                    }
-                };
+                method: 'PUT',
+                url: $rootScope.domain + '/users/' + resp.data.objectId + '/updatePassword',
+                headers: {
+                    'X-LC-Id': $rootScope.LeanCloudId,
+                    'X-LC-Key': $rootScope.LeanCloudKey,
+                    'X-LC-Session': $cookies.get('SessionToken'),
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    'old_password': $scope.old_password,
+                    'new_password': $scope.new_password2
+                }};
                 $http(req).then(function successCallback(){
                     toastr.success('Success! Please login again.', $rootScope.message_title);
                     $cookies.remove('SessionToken');
