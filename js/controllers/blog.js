@@ -98,7 +98,15 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
         $scope.username == $rootScope.Admin ? $scope.ctrl = true: $scope.ctrl = false;
     });
     $scope.blog = utils.findById($scope.blogs, $stateParams.blogId);
-    $scope.blogUrl = 'https://jack614.github.io/#/blogs/' + $stateParams.blogId;
+    //$scope.blogUrl = 'https://jack614.github.io/#/blogs/' + $stateParams.blogId;
+    var blogAbsUrl = 'http://angular.jack003.com/#/blogs/' + $stateParams.blogId;
+    var url =  "http://jalpc-a.leanapp.cn/api/surl?callback=JSON_CALLBACK&url=" + blogAbsUrl;
+    $http.jsonp(url).success(function (data) {
+        //console.log(data);
+        if (data.status == 200) {
+            $scope.blogUrl = data.surl;
+        }
+    });
     // comments list
     var req = {
     method: 'GET',
