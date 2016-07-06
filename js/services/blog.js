@@ -33,29 +33,6 @@ blogModelService.factory('utils', function () {
     };
 });
 
-blogModelService.factory('blogs', function ($rootScope, $http) {
-    var req = {
-        method: 'GET',
-        url: $rootScope.domain + '/classes/Blog',
-        headers: {
-            'X-LC-Id': $rootScope.LeanCloudId,
-            'X-LC-Key': $rootScope.LeanCloudKey,
-            'Content-Type': 'application/json'
-        },
-        params: {'order': '-createdAt'}
-    };
-    var blogs = $http(req).then(function successCallback(resp){
-        return resp.data.results;
-    });
-
-    return {
-        all: function all() {
-            if (blogs) return blogs;
-            return null;
-        }
-    }
-});
-
 blogModelService.factory('deleteComment', function($rootScope, $http, toastr, utils) {
     return {
         deletebyId: function deletebyId(objectId, comments, username, sessionToken) {
@@ -120,3 +97,26 @@ blogModelService.factory('deleteComment', function($rootScope, $http, toastr, ut
         }
     }
 });
+
+//blogModelService.factory('blogs', function ($rootScope, $http) {
+//    var req = {
+//        method: 'GET',
+//        url: $rootScope.domain + '/classes/Blog',
+//        headers: {
+//            'X-LC-Id': $rootScope.LeanCloudId,
+//            'X-LC-Key': $rootScope.LeanCloudKey,
+//            'Content-Type': 'application/json'
+//        },
+//        params: {'order': '-createdAt'}
+//    };
+//    var blogs = $http(req).then(function successCallback(resp){
+//        return resp.data.results;
+//    });
+//
+//    return {
+//        all: function all() {
+//            if (blogs) return blogs;
+//            return null;
+//        }
+//    }
+//});

@@ -8235,3 +8235,6 @@ body.md-skin {
 .navbar .nav > li:hover .dropdown-menu {
   display: block;
 }
+.row{
+    margin: 0px !important;
+}

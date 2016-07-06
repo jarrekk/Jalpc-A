@@ -8,8 +8,9 @@
             <p>Create account to see it in action.</p>
             <form class="m-t" role="form" novalidate name="registerForm" ng-submit="submitForm(registerForm.$valid)">
                 <div class="form-group" ng-class="{ 'has-error' : registerForm.username.$invalid && !registerForm.username.$pristine && registerForm.username.$dirty}">
-                    <input type="text" name="username" class="form-control" placeholder="Name" ng-required="true" ng-model="username" ng-minlength="4" ng-maxlength="10">
+                    <input type="text" name="username" class="form-control" placeholder="Name" ng-required="true" ng-model="username" ng-minlength="4" ng-maxlength="10" ng-pattern="regex">
                     <div ng-show="registerForm.$submitted || registerForm.username.$touched">
+                        <p ng-show="registerForm.username.$error.pattern" class="help-block">Username can only have letters or numbers.</p>
                         <p ng-show="registerForm.username.$error.required" class="help-block">Username is required.</p>
                         <p ng-show="registerForm.username.$error.minlength" class="help-block">Username is too short.</p>
                         <p ng-show="registerForm.username.$error.maxlength" class="help-block">Username is too long.</p>

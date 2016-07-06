@@ -1,12 +1,18 @@
-# Jalpc-A.
+# Jalpc-A.  [![Analytics](https://ga-beacon.appspot.com/UA-79921898-1/welcome-page)](http://Jack614.github.com/Jalpc-A)
 
-<https://Jack614.github.io>
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+[![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
+
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badge/)
+[![forthebadge](http://forthebadge.com/badges/uses-js.svg)](http://forthebadge.com)
+
+<http://angular.jack003.com>
 
 ![Jalpc-A](Jalpc-A.gif)
 
-Jalpc-A is a front end web application, it is written in Angularjs and the style and theme is similar with [Jalpc-A](http://Jack614.github.com/jalpc_jekyll_theme)
+Jalpc-A is a front end web application, it is written in Angularjs and the theme is similar with [Jalpc](http://Jack614.github.com/jalpc_jekyll_theme)
 
-We can register an account at this website then login to do other things,since the backhend platform is based on [Leancloud](https://leancloud.cn/),you can use [Parse](https://parse.com/) as well.
+We can register an account at this website and login to comment, only admin user can add blogs, if you like you can build a blog which everyone can add blogs,besides the app's backhend platform is based on [Leancloud](https://leancloud.cn/),you can use [Parse](https://parse.com/) as well.
 
 If you like this Jekyll theme,please give me encouragement and star this project,I will make it better.
 
@@ -19,8 +25,8 @@ If you're completely new to Jekyll, I recommend checking out the documentation a
 **Fork** the repo, and then **clone** it so you've got the code locally.
 
 ```
-$ git clone https://github.com/<your githubname>/Jack614.github.io.git
-$ cd Jack614.github.io
+$ git clone https://github.com/<your githubname>/Jalpc-A.git
+$ cd Jalpc-A
 $ gem install jekyll # If you don't have jekyll installed
 $ rm -rf _site && jekyll server
 ```
@@ -52,13 +58,15 @@ You can host your Jekyll site for free with Github Pages. [Click here](https://p
 
 A configuration tweak if you're using a gh-pages sub-folder
 
-Rename the repository to `<your githubname>.github.io` and create a branch named `gh-pages` then you will get a **https** website: `https://<your githubname>.github.io`.
+### CNAME
+
+Replace your website domain in **CNAME** file.
 
 ## Features
 
 ### Login with github
 
-You can login with github account,the web application use leancloud engine to realize it.when you logined in,your username in my blog is `gh_<your_github_username>`.
+You can login with github account,the web application use [leancloud engine](https://github.com/Jack614/Jalpc-A-engine) to realize it.when you logined in,your username in my blog is `gh_<your_github_username>`.
 
 ### Web analytics
 
@@ -95,10 +103,11 @@ Client get the web application files(html,css,js) from `http://angular.jack003.c
 * search page
 * pagination
 * donate
+* message
 
 ### Put in a Jalpc-A Plug
 
-If you want to give credit to the Jalpc-A theme with a link to my personal website <http://Jack614.github.io>, that'd be awesome. No worries if you don't.
+If you want to give credit to the Jalpc-A theme with a link to my personal website <http://angular.jack003.com>, that'd be awesome. No worries if you don't.
  
 ### Enjoy
 

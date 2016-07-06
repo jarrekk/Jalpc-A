@@ -2,22 +2,13 @@
  * Created by Jack on 16/6/17.
  */
 
-
 var rootApp = angular.module('rootApp', [
-    'indexModelCtrl',
-    'userModelCtrl',
-    'blogModelCtrl',
-    'userModelService',
-    'blogModelService',
-    'uiRouter',
-    'uiRouter.blogs',
-    'ngAnimate',
-    'summernote',
     'ui.router',
     'ngCookies',
-    'ngResource',
+    'ngAnimate',
+    //'ngResource',
     'toastr',
-    'monospaced.qrcode'
+    'oc.lazyLoad'
 ])
 .run(function ($rootScope, $state, $stateParams, $http, $location, $anchorScroll, $cookies, toastr) {
     $rootScope.LeanCloudId = 'vAMFua5yim32gEb0BgyaUPtw-gzGzoHsz';
@@ -31,11 +22,9 @@ var rootApp = angular.module('rootApp', [
     $rootScope.$on("$stateChangeSuccess",  function(event, to, toParams, from, fromParams) {
         var github_callback = $location.absUrl().match(/code=(\w{20})/i);
         if (github_callback != null && !$cookies.get('SessionToken')) {
-            // for local test
             //var url =  "http://localhost:3000/api/github?code=" + github_callback[1] + "&callback=JSON_CALLBACK";
             var url =  "http://jalpc-a.leanapp.cn/api/github?code=" + github_callback[1] + "&callback=JSON_CALLBACK";
             $http.jsonp(url).success(function (data) {
-                //console.log(data);
                 if (data.status == 200) {
                     var username = 'gh_' + data.login;
                     var req = {
@@ -48,10 +37,7 @@ var rootApp = angular.module('rootApp', [
                     },
                     data: {
                         "authData": {
-                            "github": {
-                                "uid": data.id.toString(),
-                                "username": username
-                            }
+                            "github": {"uid": data.id.toString(), "username": username}
                         }
                     }};
                     $http(req).then(function successCallback(resp){
@@ -75,27 +61,18 @@ var rootApp = angular.module('rootApp', [
 .config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{$');
     $interpolateProvider.endSymbol('$}');
-});
-
-rootApp.controller('rootCtrl', function ($rootScope) {
-    $rootScope.landing_page = false;
-    $rootScope.gray_bg = false;
-});
-
-rootApp.filter("sanitize", function($sce) {
-    return function(htmlCode){
-    return $sce.trustAsHtml(htmlCode);
-  }
-});
-
-angular.module('uiRouter', ['ui.router'])
+})
 .config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
         .state('index', {
             url: '/',
             templateUrl: 'tpls/index.html',
-            controller: 'indexCtrl'
+            controller: 'indexCtrl',
+            resolve: {
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load('js/controllers/index.js');
+                }}
         })
         .state('user', {
             url: '/user',
@@ -110,56 +87,124 @@ angular.module('uiRouter', ['ui.router'])
         .state('user.login', {
             url: '/login',
             templateUrl: 'tpls/user/login.html',
-            controller: 'loginCtrl'
+            controller: 'loginCtrl',
+            resolve: {
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load('js/controllers/user.js');
+                }}
         })
         .state('user.register', {
             url: '/register',
             templateUrl: 'tpls/user/register.html',
-            controller: 'registerCtrl'
+            controller: 'registerCtrl',
+            resolve: {
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load('js/controllers/user.js');
+                }}
         })
         .state('user.forgotpassword', {
             url: '/forgot_password',
             templateUrl: 'tpls/user/forgot_password.html',
-            controller: 'forgotpasswordCtrl'
+            controller: 'forgotpasswordCtrl',
+            resolve: {
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load('js/controllers/user.js');
+                }}
         })
         .state('user.resetpassword', {
             url: '/reset_password',
             templateUrl: 'tpls/user/reset_password.html',
-            controller: 'resetpasswordCtrl'
+            controller: 'resetpasswordCtrl',
+            resolve: {
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load(['js/controllers/user.js', 'js/services/user.js']);
+                }}
         })
-});
-
-angular.module('uiRouter.blogs', ['ui.router', 'ngSanitize', 'toastr'])
-.config(function ($stateProvider, $urlRouterProvider) {
-    $stateProvider
         .state('blogs', {
             abstract: true,
             url: '/blogs',
             templateUrl: 'tpls/blog/blog.html',
+            controller: 'blogsCtrl',
             resolve: {
-                blogs: function (blogs) {
-                        return blogs.all();
-                    }
-            },
-            controller: 'blogsCtrl'
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        'js/controllers/blog.js',
+                        'js/services/blog.js',
+                        'js/controllers/user.js',
+                        'js/services/user.js',
+                        'bower_components/angular-sanitize/angular-sanitize.min.js',
+                        //'bower_components/angular-animate/angular-animate.min.js',
+                        'js/trimHtml.js'
+                    ]);
+                },
+                blogs:  function($rootScope, $http){
+                    return $http({
+                        method: 'GET',
+                        url: $rootScope.domain + '/classes/Blog',
+                        headers: {
+                            'X-LC-Id': $rootScope.LeanCloudId,
+                            'X-LC-Key': $rootScope.LeanCloudKey,
+                            'Content-Type': 'application/json'},
+                        params: {'order': '-createdAt'}})
+                        .then (function (resp) {
+                            return resp.data.results;});
+                }}
         })
         .state('blogs.add', {
             url: '/add',
             templateUrl: 'tpls/blog/blog_add.html',
-            controller: 'addblogCtrl'
+            controller: 'addblogCtrl',
+            resolve: {
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        'bower_components/summernote/dist/summernote.css',
+                        'bower_components/angular-summernote/dist/angular-summernote.min.js',
+                        'bower_components/summernote/dist/summernote.min.js'
+                    ]);
+                }}
         })
         .state('blogs.detail', {
             url: '/{blogId:[0-9a-z]{24}}',
             templateUrl: 'tpls/blog/blog_detail.html',
-            controller: 'blogCtrl'
+            controller: 'blogCtrl',
+            resolve: {
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        'bower_components/summernote/dist/summernote.css',
+                        'bower_components/angular-summernote/dist/angular-summernote.min.js',
+                        'bower_components/summernote/dist/summernote.min.js',
+                        'bower_components/qrcode-generator/js/qrcode.js',
+                        //'bower_components/qrcode-generator/js/qrcode_UTF8.js',
+                        'bower_components/angular-qrcode/angular-qrcode.js'
+                    ]);
+                }}
         })
         .state('blogs.edit', {
             url: '/edit/{blogId:[0-9a-z]{24}}',
             templateUrl: 'tpls/blog/blog_edit.html',
-            controller: 'editblogCtrl'
+            controller: 'editblogCtrl',
+            resolve: {
+                loadMyService: function($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        'bower_components/summernote/dist/summernote.css',
+                        'bower_components/angular-summernote/dist/angular-summernote.min.js',
+                        'bower_components/summernote/dist/summernote.min.js'
+                    ]);
+                }}
         })
         .state('blogs.list', {
             url: '',
-            templateUrl: 'tpls/blog/blog_list.html'
+            templateUrl: 'tpls/blog/blog_list.html',
         })
+});
+
+rootApp.filter("sanitize", function($sce) {
+    return function(htmlCode){
+    return $sce.trustAsHtml(htmlCode);
+    }
+});
+
+rootApp.controller('rootCtrl', function ($rootScope) {
+    $rootScope.landing_page = false;
+    $rootScope.gray_bg = false;
 });

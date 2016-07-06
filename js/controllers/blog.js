@@ -5,14 +5,15 @@
 var blogModelCtrl = angular.module('blogModelCtrl', []);
 
 blogModelCtrl.controller('blogsCtrl', function ($scope, $rootScope, $cookies, $timeout, $state, toastr, blogs, user) {
-    $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
-        resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
-        //$scope.username = resp.data.username;
-    }).then(function () {
-        $scope.username == $rootScope.Admin ? $scope.add = true: $scope.add = false;
-    });
     $rootScope.landing_page = true;
     $scope.blogs = blogs;
+    $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
+        resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
+    });
+    $scope.username == $rootScope.Admin ? $scope.add = true: $scope.add = false;
+    if ($scope.username) {
+        $scope.username.indexOf('_') == -1 ? $scope.registerUser = true: $scope.registerUser = false;
+    }
     $scope.logout = function () {
         $cookies.remove('SessionToken');
         toastr.success('Success! You have logged out.', $rootScope.message_title);
@@ -23,13 +24,12 @@ blogModelCtrl.controller('blogsCtrl', function ($scope, $rootScope, $cookies, $t
 });
 
 blogModelCtrl.controller('addblogCtrl', function ($scope, $rootScope, $http, $state, $timeout, $cookies, toastr, user) {
+    $rootScope.landing_page = true;
     $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
         resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
         $scope.UserId = resp.data.objectId;
-    }).then(function () {
-        $scope.username != $rootScope.Admin && $rootScope.back();
     });
-    $rootScope.landing_page = true;
+    $scope.username != $rootScope.Admin && $rootScope.back();
     $scope.submitForm = function (isValid) {
         if (isValid) {
             var acl = {};
@@ -88,17 +88,15 @@ blogModelCtrl.controller('addblogCtrl', function ($scope, $rootScope, $http, $st
     };
 });
 
-blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams, $location, $anchorScroll, $http, $state, $cookies, $timeout, toastr, blogs, utils, user, deleteComment) {
+blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams, $location, $anchorScroll, $http, $state, $cookies, $timeout, toastr, utils, user, deleteComment) {
     $rootScope.landing_page = true;
     $scope.commented = false;
     $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
         resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
         $scope.UserId = resp.data.objectId;
-    }).then(function () {
-        $scope.username == $rootScope.Admin ? $scope.ctrl = true: $scope.ctrl = false;
     });
+    $scope.username == $rootScope.Admin ? $scope.ctrl = true: $scope.ctrl = false;
     $scope.blog = utils.findById($scope.blogs, $stateParams.blogId);
-    //$scope.blogUrl = 'https://jack614.github.io/#/blogs/' + $stateParams.blogId;
     var blogAbsUrl = 'http://angular.jack003.com/#/blogs/' + $stateParams.blogId;
     var url =  "http://jalpc-a.leanapp.cn/api/surl?callback=JSON_CALLBACK&url=" + blogAbsUrl;
     $http.jsonp(url).success(function (data) {
@@ -270,13 +268,15 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
 });
 
 blogModelCtrl.controller('editblogCtrl', function ($scope, $rootScope, $stateParams, $cookies, $http, $state, $timeout, toastr, utils, user) {
-    $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
-        resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
-    }).then(function () {
-        $scope.username != $rootScope.Admin && $rootScope.back();
-    });
     $rootScope.landing_page = true;
     $scope.blog = utils.findById($scope.blogs, $stateParams.blogId);
+    $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
+        resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
+    });
+    $scope.username != $rootScope.Admin && $rootScope.back();
+    $scope.cancel = function() {
+        $rootScope.back();
+    };
     $scope.submitForm = function(isValid) {
         if (isValid) {
             var blog_objectId = $scope.blog.objectId;
