@@ -86,7 +86,7 @@ Since the project is **open source**, we must consider user's username and passw
 
 ![connect](connect.png)
 
-Client get the web application files(html,css,js),the push requrst to Leancloud, now both connect use https and Angularjs only save user's token on brower.
+Client get the web application files(html,css,js) from `http://angular.jack003.com`, all the user account connections and token connections are with `https://api.leancloud.cn`, and some jsonp scripts are with `http://jalpc-a.leanapp.cn` such as github login and blog's short url.
 
 ##
 
