@@ -31,12 +31,14 @@
                                 <a ng-click="delete_blog(blog.objectId)" type="button" class="btn btn-danger btn-sm">Delete</a>
                             </div>
                             <hr>
-                            <h3>Blog QRcode</h3>
-                            <br>
-                            <div id="comment">
+                            <h3>Share</h3>
+                            <div class="row">
+                                <div class="vote-icon pull-left"><a id="riverroad" title="" ><i class="fa fa-qrcode"></i></a></div>
+                            </div>
+                            <div id="comment" style="display: none;">
                                 <qrcode data="{$ blogUrl $}" size="120" error-correction-level="M" download></qrcode>
                             </div>
-                            <blockquote><h5>If you scan it with Wechat,please open it in other browser.</h5></blockquote>
+                            <footer class="col-sm-offset-1">If you scan it with Wechat,please open it in other browser.</footer>
                             <hr>
                             <h3>Comments:</h3>
                             <div ng-show="username" class="animate-show">
@@ -84,3 +86,13 @@
             </div>
     </section>
 </div>
+
+<script>
+    $(function () {
+        setTimeout(function(){
+//            console.log($(".qrcode-link").attr("href"));
+            var imgdata = $(".qrcode-link").attr("href");
+            $("#riverroad").tooltip({ content: "<img src=" + imgdata +" />" });
+        }, 1000);
+    })
+</script>

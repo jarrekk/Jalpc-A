@@ -13,6 +13,12 @@ permalink: /
 
     <title ng-bind="'Celine Blog - ' + $state.current.name"></title>
     <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- before load -->
+    <script>
+        var num = Math.floor(Math.random() * (17 - 1) + 1);
+        var cssStr='<link href="css/load/load-v'+ num +'.css" rel="stylesheet" type="text/css"/>';
+        document.write(cssStr);
+    </script>
     <!-- Bootstrap core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -50,8 +56,18 @@ permalink: /
 </head>
 
 <body ng-class="{'landing-page': landing_page, 'gray-bg': gray_bg}" id="page-top">
+<div class="se-pre-con"></div>
 <div ui-view></div>
 </body>
+    <!-- after load -->
+    <script>
+//        $(window).load(function() {
+        $(function () {
+        setTimeout(function(){
+            $(".se-pre-con").fadeOut("slow");
+        }, 1000);
+    })
+    </script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -76,6 +76,7 @@ I use [Google analytics](https://www.google.com/analytics/) to do web analytics,
 
 I use [summernote](https://github.com/summernote/angular-summernote) to generate a rich text editor at web page,you can write many styles of words and add pictures, videos and so on.It's very easy to write an article.
 > When you want to upload an image,the image will be uploaded to a background platform(qiniu cloud service).
+
 ![rich text editor](rte.jpeg)
 
 ### Share

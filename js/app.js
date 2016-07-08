@@ -170,6 +170,8 @@ var rootApp = angular.module('rootApp', [
             resolve: {
                 loadMyService: function($ocLazyLoad) {
                     return $ocLazyLoad.load([
+                        'bower_components/jquery-ui/themes/base/jquery-ui.min.css',
+                        'bower_components/jquery-ui/jquery-ui.min.js',
                         'bower_components/summernote/dist/summernote.css',
                         'bower_components/angular-summernote/dist/angular-summernote.min.js',
                         'bower_components/summernote/dist/summernote.min.js',
@@ -197,13 +199,11 @@ var rootApp = angular.module('rootApp', [
             templateUrl: 'tpls/blog/blog_list.html',
         })
 });
-
 rootApp.filter("sanitize", function($sce) {
     return function(htmlCode){
     return $sce.trustAsHtml(htmlCode);
     }
 });
-
 rootApp.controller('rootCtrl', function ($rootScope) {
     $rootScope.landing_page = false;
     $rootScope.gray_bg = false;
