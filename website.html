@@ -61,7 +61,15 @@ permalink: /
 </body>
     <!-- after load -->
 <script>
-    (function(){function a(){var c=document.createElement("script");c.type="text/javascript";c.async=true;c.src="https://buttons.github.io/buttons.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(c,b)}if(window.attachEvent){window.attachEvent("onload",a);window.attachEvent("onload",$(".se-pre-con").fadeOut("slow"))}else{window.addEventListener("load",a,false);window.addEventListener("load",$(".se-pre-con").fadeOut("slow"),false)}})();
+//    $(window).load(function() {
+//    $(function () {
+//        setTimeout(function(){
+            $(".se-pre-con").fadeOut("slow");
+//        }, 1200);
+//    });
+    document.write("<script async='true' defer id='github-bjs' src='https://buttons.github.io/buttons.js'><\/script>");
+</script>
+<script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
