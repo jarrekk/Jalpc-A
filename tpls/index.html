@@ -391,18 +391,12 @@
             </div>
         </div>
     </section>
-
-    <script async="true" defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
-
 <script>
-
     $(document).ready(function () {
-
         $('body').scrollspy({
             target: '.navbar-fixed-top',
             offset: 80
         });
-
         // Page scrolling feature
         $('a.page-scroll').bind('click', function(event) {
             var link = $(this);
@@ -413,7 +407,6 @@
             $("#navbar").collapse('hide');
         });
     });
-
     var cbpAnimatedHeader = (function() {
         var docElem = document.documentElement,
                 header = document.querySelector( '.navbar-default' ),
@@ -441,11 +434,8 @@
             return window.pageYOffset || docElem.scrollTop;
         }
         init();
-
     })();
-
     // Activate WOW.js plugin for animation on scrol
     new WOW().init();
-
 </script>
 </div>
