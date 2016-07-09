@@ -53,22 +53,20 @@ permalink: /
     <script src="js/inspinia.js"></script>
     <script src="js/app.js"></script>
     <!--<script src="js/directives/directive.js"></script>-->
+    <script>
+//        $(window).load(function() {
+        $(function () {
+            setTimeout(function(){
+                $(".se-pre-con").fadeOut("slow");
+            }, 1500);
+        });
+    </script>
 </head>
 
 <body ng-class="{'landing-page': landing_page, 'gray-bg': gray_bg}" id="page-top">
 <div class="se-pre-con"></div>
 <div ui-view></div>
 </body>
-    <!-- after load -->
-<script>
-//    $(window).load(function() {
-//    $(function () {
-//        setTimeout(function(){
-            $(".se-pre-con").fadeOut("slow");
-//        }, 1200);
-//    });
-    document.write("<script async='true' defer id='github-bjs' src='https://buttons.github.io/buttons.js'><\/script>");
-</script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
