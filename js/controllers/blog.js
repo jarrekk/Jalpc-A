@@ -267,7 +267,7 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
 			closeOnCancel: false
 		}, function(isConfirm){
 			if (isConfirm) {
-                delete_blog($scope.blog.objectId);
+        delete_blog($scope.blog.objectId);
 				SweetAlert.swal("Deleted!", "Your blog has been deleted.", "success");
 			} else {
 				SweetAlert.swal("Cancelled", "Your blog is safe :)", "error");
