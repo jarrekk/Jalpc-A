@@ -9,11 +9,12 @@ blogModelCtrl.controller('blogsCtrl', function ($scope, $rootScope, $cookies, $t
     $scope.blogs = blogs;
     $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
         resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
+        $scope.username == $rootScope.Admin ? $scope.add = true: $scope.add = false;
+        if ($scope.username) {
+            $scope.username.indexOf('_') == -1 ? $scope.registerUser = true: $scope.registerUser = false;
+        }
     });
-    $scope.username == $rootScope.Admin ? $scope.add = true: $scope.add = false;
-    if ($scope.username) {
-        $scope.username.indexOf('_') == -1 ? $scope.registerUser = true: $scope.registerUser = false;
-    }
+
     $scope.logout = function () {
         $cookies.remove('SessionToken');
         toastr.success('Success! You have logged out.', $rootScope.message_title);
@@ -28,8 +29,8 @@ blogModelCtrl.controller('addblogCtrl', function ($scope, $rootScope, $http, $st
     $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
         resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
         $scope.UserId = resp.data.objectId;
+        $scope.username != $rootScope.Admin && $rootScope.back();
     });
-    $scope.username != $rootScope.Admin && $rootScope.back();
     $scope.submitForm = function (isValid) {
         if (isValid) {
             var acl = {};
@@ -88,14 +89,14 @@ blogModelCtrl.controller('addblogCtrl', function ($scope, $rootScope, $http, $st
     };
 });
 
-blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams, $location, $anchorScroll, $http, $state, $cookies, $timeout, toastr, utils, user, deleteComment) {
+blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams, $location, $anchorScroll, $http, $state, $cookies, $timeout, toastr, SweetAlert, utils, user, deleteComment) {
     $rootScope.landing_page = true;
     $scope.commented = false;
     $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
         resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
         $scope.UserId = resp.data.objectId;
+        $scope.username == $rootScope.Admin ? $scope.ctrl = true: $scope.ctrl = false;
     });
-    $scope.username == $rootScope.Admin ? $scope.ctrl = true: $scope.ctrl = false;
     $scope.blog = utils.findById($scope.blogs, $stateParams.blogId);
     var blogAbsUrl = 'http://angular.jack003.com/#/blogs/' + $stateParams.blogId;
     var url =  "http://jalpc-a.leanapp.cn/api/surl?callback=JSON_CALLBACK&url=" + blogAbsUrl;
@@ -168,14 +169,31 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
     };
     // delete comment
     $scope.delete_comment = function(objectId) {
-        $scope.comments = deleteComment.deletebyId(objectId, $scope.comments, $scope.username, $cookies.get('SessionToken'));
-    };
+		SweetAlert.swal({
+			title: "Are you sure?",
+			text: "Your will delete this comment and can't rollback!",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes, delete it!",
+			cancelButtonText: "No, cancel plx!",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		}, function(isConfirm){
+			if (isConfirm) {
+                $scope.comments = deleteComment.deletebyId(objectId, $scope.comments, $scope.username, $cookies.get('SessionToken'));
+                SweetAlert.swal("Deleted!", "Your comment has been deleted.", "success");
+			} else {
+				SweetAlert.swal("Cancelled", "Your comment is safe :)", "error");
+			}
+		});
+	}
     // comment reset
     $scope.text_reset = function() {
         $scope.comment_text = undefined;
     };
     // delete blog
-    $scope.delete_blog = function (objectId) {
+    function delete_blog(objectId) {
         if ($scope.username == $rootScope.Admin) {
             for (var i = 0; i < $scope.comments.length; i++) {
                 $scope.comments = deleteComment.deletebyId($scope.comments[i].objectId, $scope.comments, $scope.username, $cookies.get('SessionToken'));
@@ -236,6 +254,26 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
             });
         }
     };
+    $scope.delete_blog = function() {
+		SweetAlert.swal({
+			title: "Are you sure?",
+			text: "Your will delete this blog and can't rollback!",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes, delete it!",
+			cancelButtonText: "No, cancel plx!",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		}, function(isConfirm){
+			if (isConfirm) {
+                delete_blog($scope.blog.objectId);
+				SweetAlert.swal("Deleted!", "Your blog has been deleted.", "success");
+			} else {
+				SweetAlert.swal("Cancelled", "Your blog is safe :)", "error");
+			}
+		});
+	}
     $scope.GoTo = function (id, replyTo, comment_content) {
         $scope.commented = false;
         $location.hash(id);
@@ -272,8 +310,8 @@ blogModelCtrl.controller('editblogCtrl', function ($scope, $rootScope, $statePar
     $scope.blog = utils.findById($scope.blogs, $stateParams.blogId);
     $cookies.get('SessionToken') && user.UserInfo().then(function (resp) {
         resp.data.authData ? $scope.username = resp.data.authData.github.username : $scope.username = resp.data.username;
+        $scope.username != $rootScope.Admin && $rootScope.back();
     });
-    $scope.username != $rootScope.Admin && $rootScope.back();
     $scope.cancel = function() {
         $rootScope.back();
     };

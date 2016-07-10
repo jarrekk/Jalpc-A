@@ -36,6 +36,7 @@
     "angular-scroll": "^1.0.0",
     "angular-qrcode": "monospaced/angular-qrcode#^6.2.1",
     "oclazyload": "^1.0.9",
-    "jquery-ui": "^1.11.4"
+    "jquery-ui": "^1.11.4",
+    "ngSweetAlert": "angular-sweetalert#^1.1.0"
   }
 }

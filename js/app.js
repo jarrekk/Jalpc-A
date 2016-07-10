@@ -170,6 +170,7 @@ var rootApp = angular.module('rootApp', [
             resolve: {
                 loadMyService: function($ocLazyLoad) {
                     return $ocLazyLoad.load([
+                        'bower_components/sweetalert/dist/sweetalert.css',
                         'bower_components/jquery-ui/themes/base/jquery-ui.min.css',
                         'bower_components/jquery-ui/jquery-ui.min.js',
                         'bower_components/summernote/dist/summernote.css',
@@ -177,7 +178,9 @@ var rootApp = angular.module('rootApp', [
                         'bower_components/summernote/dist/summernote.min.js',
                         'bower_components/qrcode-generator/js/qrcode.js',
                         //'bower_components/qrcode-generator/js/qrcode_UTF8.js',
-                        'bower_components/angular-qrcode/angular-qrcode.js'
+                        'bower_components/angular-qrcode/angular-qrcode.js',
+                        'bower_components/sweetalert/dist/sweetalert.min.js',
+                        'bower_components/ngSweetAlert/SweetAlert.min.js'
                     ]);
                 }}
         })
