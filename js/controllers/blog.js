@@ -21,7 +21,7 @@ blogModelCtrl.controller('blogsCtrl', function ($scope, $rootScope, $cookies, $t
         $timeout(function () {
             window.location.reload();
         }, 1500);
-    }
+    };
 });
 
 blogModelCtrl.controller('addblogCtrl', function ($scope, $rootScope, $http, $state, $timeout, $cookies, toastr, user) {
@@ -63,7 +63,7 @@ blogModelCtrl.controller('addblogCtrl', function ($scope, $rootScope, $http, $st
                 }, 1500);
             }, function errorCallback(resp) {
                 toastr.error(resp.data.error, $rootScope.message_title);
-            })
+            });
         }
     };
     $scope.imageUpload = function(files) {
@@ -125,11 +125,11 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
     // comment submit
     $scope.submitForm = function() {
         var endValue = $scope.comment_text.lastIndexOf('</blockquote>');
-        if ($scope.comment_text == undefined) {
-            toastr.error('Error! Please input your comment!', $rootScope.message_title)
+        if ($scope.comment_text === undefined) {
+            toastr.error('Error! Please input your comment!', $rootScope.message_title);
         } else if ($scope.comment_text.substring(endValue).length < 20) {
-            toastr.error('Error! Your comment is too short!', $rootScope.message_title)
-        } else if ($scope.comment_text.replace(/<p>/g, "").replace(/<\/p>/g, "").replace(/<br>/g, "").replace(/&nbsp;/g, "") != '') {
+            toastr.error('Error! Your comment is too short!', $rootScope.message_title);
+        } else if ($scope.comment_text.replace(/<p>/g, "").replace(/<\/p>/g, "").replace(/<br>/g, "").replace(/&nbsp;/g, "") !== '') {
             var acl = {};
             acl[$scope.UserId] = {"read": true, "write": true};
             acl[$rootScope.AdminId] = {"read": true, "write": true};
@@ -164,7 +164,7 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
         //} else if ($scope.comment_text.length > 3000) {
         //    toastr.error('Please input your comment!', $rootScope.message_title)
         } else {
-            toastr.error('Error! Please input your comment!!', $rootScope.message_title)
+            toastr.error('Error! Please input your comment!!', $rootScope.message_title);
         }
     };
     // delete comment
@@ -187,7 +187,7 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
 				SweetAlert.swal("Cancelled", "Your comment is safe :)", "error");
 			}
 		});
-	}
+	};
     // comment reset
     $scope.text_reset = function() {
         $scope.comment_text = undefined;
@@ -253,7 +253,7 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
                 toastr.error(resp.data.error, $rootScope.message_title);
             });
         }
-    };
+    }
     $scope.delete_blog = function() {
 		SweetAlert.swal({
 			title: "Are you sure?",
@@ -273,7 +273,7 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
 				SweetAlert.swal("Cancelled", "Your blog is safe :)", "error");
 			}
 		});
-	}
+	};
     $scope.GoTo = function (id, replyTo, comment_content) {
         $scope.commented = false;
         $location.hash(id);
@@ -302,7 +302,7 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
                 }
             });
         }
-    }
+    };
 });
 
 blogModelCtrl.controller('editblogCtrl', function ($scope, $rootScope, $stateParams, $cookies, $http, $state, $timeout, toastr, utils, user) {
@@ -341,5 +341,5 @@ blogModelCtrl.controller('editblogCtrl', function ($scope, $rootScope, $statePar
                 toastr.error(resp.data.error, $rootScope.message_title);
             });
         }
-    }
+    };
 });

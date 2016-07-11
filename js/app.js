@@ -71,7 +71,7 @@ var rootApp = angular.module('rootApp', [
             controller: 'indexCtrl',
             resolve: {
                 loadMyService: function($ocLazyLoad) {
-                    return $ocLazyLoad.load('js/controllers/index.js');
+                    return $ocLazyLoad.load(['js/trimHtml.js', 'js/controllers/index.js']);
                 }}
         })
         .state('user', {
@@ -200,12 +200,12 @@ var rootApp = angular.module('rootApp', [
         .state('blogs.list', {
             url: '',
             templateUrl: 'tpls/blog/blog_list.html',
-        })
+        });
 });
 rootApp.filter("sanitize", function($sce) {
     return function(htmlCode){
     return $sce.trustAsHtml(htmlCode);
-    }
+    };
 });
 rootApp.controller('rootCtrl', function ($rootScope) {
     $rootScope.landing_page = false;

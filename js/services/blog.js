@@ -95,7 +95,7 @@ blogModelService.factory('deleteComment', function($rootScope, $http, toastr, ut
             }
             return comments;
         }
-    }
+    };
 });
 
 //blogModelService.factory('blogs', function ($rootScope, $http) {
