@@ -106,11 +106,12 @@ Client get the web application files(html,css,js) from `http://angular.jack003.c
 * pagination
 * donate
 * message
+* send email
 
 ### Put in a Jalpc-A Plug
 
 If you want to give credit to the Jalpc-A theme with a link to my personal website <http://angular.jack003.com>, that'd be awesome. No worries if you don't.
- 
+
 ### Enjoy
 
 I hope you enjoy using Jalpc-A. If you encounter any issues, please feel free to let me know by creating an issue. I'd love to help.
@@ -151,4 +152,3 @@ There may be merge conflicts, so be sure to fix the files that git lists if they
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
