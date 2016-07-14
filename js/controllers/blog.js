@@ -109,7 +109,8 @@ blogModelCtrl.controller('blogCtrl', function ($scope, $rootScope, $stateParams,
     $http(req).then(function successCallback(resp) {
         $scope.blog = resp.data.results[0];
     });
-    var blogAbsUrl = 'http://angular.jack003.com/#/blogs/' + $stateParams.blogId;
+    var blogAbsUrl = 'http://angular.jack003.com/#/blogs//' + $stateParams.blogId;
+    console.log(blogAbsUrl);
     var url =  "http://jalpc-a.leanapp.cn/api/surl?callback=JSON_CALLBACK&url=" + blogAbsUrl;
     $http.jsonp(url).success(function (data) {
         //console.log(data);
