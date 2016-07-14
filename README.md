@@ -92,7 +92,7 @@ Every blog, I generate a QRCode image with [angular-qrcode](https://github.com/m
 
 ### Pagination
 
-The pagination is baseed on [ui-bootstrap](https://github.com/angular-ui/bootstrap),and there is a small bug: if you put `items-per-page` and use page params to get the data,the page will return to the first page.So I didn't put it in html,and re calculate the total count, and now the url like this: `http://angular.jack003.com/website.html#/blogs/2`, we can go back and go forward through browser between pages.
+The pagination is baseed on [ui-bootstrap](https://github.com/angular-ui/bootstrap),but there is a small bug: if you put `items-per-page` in html DOM and use page params to get the data with `ui-router`,the page will go to the matching page and return to the first page immediately.So I didn't put it in html,and re calculate the total count, now the url like this: `http://angular.jack003.com/website.html#/blogs/2`, we can go back and go forward through browser between pages.
 
 ### Safe
 
