@@ -90,6 +90,10 @@ Every blog, I generate a QRCode image with [angular-qrcode](https://github.com/m
 * Reply to others' comments
 * Delete your previous comments
 
+### Pagination
+
+The pagination is baseed on [ui-bootstrap](https://github.com/angular-ui/bootstrap),and there is a small bug: if you put `items-per-page` and use page params to get the data,the page will return to the first page.So I didn't put it in html,and re calculate the total count, and now the url like this: `http://angular.jack003.com/website.html#/blogs/2`, we can go back and go forward through browser between pages.
+
 ### Safe
 
 Since the project is **open source**, we must consider user's username and password and safe connection.The below is analysis chart when use access to the website.
@@ -103,7 +107,6 @@ Client get the web application files(html,css,js) from `http://angular.jack003.c
 ### To Do
 
 * search page
-* pagination
 * donate
 * message
 * send email
@@ -141,6 +144,7 @@ There may be merge conflicts, so be sure to fix the files that git lists if they
 * [Jekyll](http://jekyllrb.com)
 * [Bootstrap](http://www.bootcss.com)
 * [ui-router](https://github.com/angular-ui/ui-router)
+* [ui-bootstrap](https://github.com/angular-ui/bootstrap)
 * [angular-toastr](https://github.com/Foxandxss/angular-toastr)
 * [angular-summernote](https://github.com/summernote/angular-summernote)
 * [angular-qrcode](https://github.com/monospaced/angular-qrcode)

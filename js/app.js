@@ -122,7 +122,8 @@ var rootApp = angular.module('rootApp', [
         })
         .state('blogs', {
             abstract: true,
-            url: '/blogs',
+            // url: '/blogs',
+            url: '/blogs/{page:[0-9]{0,3}}',
             templateUrl: 'tpls/blog/blog.html',
             controller: 'blogsCtrl',
             resolve: {
@@ -133,22 +134,24 @@ var rootApp = angular.module('rootApp', [
                         'js/controllers/user.js',
                         'js/services/user.js',
                         'bower_components/angular-sanitize/angular-sanitize.min.js',
+                        'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
                         //'bower_components/angular-animate/angular-animate.min.js',
                         'js/trimHtml.js'
                     ]);
                 },
-                blogs:  function($rootScope, $http){
-                    return $http({
-                        method: 'GET',
-                        url: $rootScope.domain + '/classes/Blog',
-                        headers: {
-                            'X-LC-Id': $rootScope.LeanCloudId,
-                            'X-LC-Key': $rootScope.LeanCloudKey,
-                            'Content-Type': 'application/json'},
-                        params: {'order': '-createdAt'}})
-                        .then (function (resp) {
-                            return resp.data.results;});
-                }}
+                // blogs:  function($rootScope, $http){
+                //     return $http({
+                //         method: 'GET',
+                //         url: $rootScope.domain + '/classes/Blog',
+                //         headers: {
+                //             'X-LC-Id': $rootScope.LeanCloudId,
+                //             'X-LC-Key': $rootScope.LeanCloudKey,
+                //             'Content-Type': 'application/json'},
+                //         params: {'order': '-createdAt'}})
+                //         .then (function (resp) {
+                //             return resp.data.results;});
+                // }
+            }
         })
         .state('blogs.add', {
             url: '/add',
@@ -200,6 +203,7 @@ var rootApp = angular.module('rootApp', [
         .state('blogs.list', {
             url: '',
             templateUrl: 'tpls/blog/blog_list.html',
+            controller: 'bloglistCtrl'
         });
 });
 rootApp.filter("sanitize", function($sce) {
