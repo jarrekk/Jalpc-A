@@ -11,10 +11,11 @@
                                         Blog List
                                     </h1>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <input type="text" placeholder="Search for something..." class="form-control" ng-model="searchText">
-                                </div>
-                                <div class="vote-item" ng-repeat="blog in blogs | filter:searchText">
+                                </div> -->
+                                <!-- <div class="vote-item" ng-repeat="blog in blogs | filter:searchText"> -->
+                                <div class="vote-item" ng-repeat="blog in blogs">
                                     <div class="row">
                                         <div class="col-md-10">
                                             <a data-target="#angularjs" ui-sref="blogs.detail({blogId:blog.objectId})" class="vote-title">{$ blog.title $}</a>
