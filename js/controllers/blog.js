@@ -382,9 +382,7 @@ blogModelCtrl.controller('bloglistCtrl', function($scope, $rootScope, $statePara
         params: {'count': '1'}
     };
     $http(req).then(function successCallback(resp){
-        // $scope.bigTotalItems = resp.data.count;
         $scope.totalItems = resp.data.count * 10 / $scope.pageSize;
-        // $scope.numPages = Math.ceil($scope.bigTotalItems / $scope.pageSize);
     });
     var req = {
         method: 'GET',
