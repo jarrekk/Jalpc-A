@@ -67,6 +67,7 @@ var rootApp = angular.module('rootApp', [
     $stateProvider
         .state('index', {
             url: '/',
+            data:{ pageTitle: '' },
             templateUrl: 'tpls/index.html',
             controller: 'indexCtrl',
             resolve: {
@@ -76,6 +77,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('user', {
             url: '/user',
+            data:{ pageTitle: '' },
             template: '<div ui-view></div>',
             // controller: function ($state, $rootScope) {
             // $rootScope.currentUser = AV.User.current();
@@ -86,6 +88,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('user.login', {
             url: '/login',
+            data:{ pageTitle: 'Login' },
             templateUrl: 'tpls/user/login.html',
             controller: 'loginCtrl',
             resolve: {
@@ -202,6 +205,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('blogs.list', {
             url: '',
+            data:{ pageTitle: 'Blogs' },
             templateUrl: 'tpls/blog/blog_list.html',
             controller: 'bloglistCtrl'
         });
