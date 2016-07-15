@@ -67,7 +67,7 @@ var rootApp = angular.module('rootApp', [
     $stateProvider
         .state('index', {
             url: '/',
-            data:{ pageTitle: '' },
+            data:{ pageTitle: 'Index' },
             templateUrl: 'tpls/index.html',
             controller: 'indexCtrl',
             resolve: {
@@ -98,6 +98,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('user.register', {
             url: '/register',
+            data:{ pageTitle: 'Register' },
             templateUrl: 'tpls/user/register.html',
             controller: 'registerCtrl',
             resolve: {
@@ -107,6 +108,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('user.forgotpassword', {
             url: '/forgot_password',
+            data:{ pageTitle: 'Forgot password' },
             templateUrl: 'tpls/user/forgot_password.html',
             controller: 'forgotpasswordCtrl',
             resolve: {
@@ -116,6 +118,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('user.resetpassword', {
             url: '/reset_password',
+            data:{ pageTitle: 'Reset password' },
             templateUrl: 'tpls/user/reset_password.html',
             controller: 'resetpasswordCtrl',
             resolve: {
@@ -158,6 +161,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('blogs.add', {
             url: '/add',
+            data:{ pageTitle: 'Add blog' },
             templateUrl: 'tpls/blog/blog_add.html',
             controller: 'addblogCtrl',
             resolve: {
@@ -171,6 +175,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('blogs.detail', {
             url: '/{blogId:[0-9a-z]{24}}',
+            data:{ pageTitle: 'Blog' },
             templateUrl: 'tpls/blog/blog_detail.html',
             controller: 'blogCtrl',
             resolve: {
@@ -192,6 +197,7 @@ var rootApp = angular.module('rootApp', [
         })
         .state('blogs.edit', {
             url: '/edit/{blogId:[0-9a-z]{24}}',
+            data:{ pageTitle: 'Edit blog' },
             templateUrl: 'tpls/blog/blog_edit.html',
             controller: 'editblogCtrl',
             resolve: {
