@@ -145,18 +145,6 @@ var rootApp = angular.module('rootApp', [
                         'js/trimHtml.js'
                     ]);
                 },
-                // blogs:  function($rootScope, $http){
-                //     return $http({
-                //         method: 'GET',
-                //         url: $rootScope.domain + '/classes/Blog',
-                //         headers: {
-                //             'X-LC-Id': $rootScope.LeanCloudId,
-                //             'X-LC-Key': $rootScope.LeanCloudKey,
-                //             'Content-Type': 'application/json'},
-                //         params: {'order': '-createdAt'}})
-                //         .then (function (resp) {
-                //             return resp.data.results;});
-                // }
             }
         })
         .state('blogs.add', {

@@ -11,8 +11,7 @@ blogModelCtrl.controller('blogsCtrl', function ($scope, $rootScope, $cookies, $h
         $scope.username == $rootScope.Admin ? $scope.add = true: $scope.add = false;
         if ($scope.username) {
             $scope.username.indexOf('_') == -1 ? $scope.registerUser = true: $scope.registerUser = false;
-        }
-    });
+        }});
     $scope.logout = function () {
         $cookies.remove('SessionToken');
         toastr.success('Success! You have logged out.', $rootScope.message_title);
