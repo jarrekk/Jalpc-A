@@ -21,7 +21,7 @@ var rootApp = angular.module('rootApp', [
     $rootScope.$stateParams = $stateParams;
     $rootScope.$on("$stateChangeSuccess",  function(event, to, toParams, from, fromParams) {
         var github_callback = $location.absUrl().match(/code=(\w{20})/i);
-        if (github_callback != null && !$cookies.get('SessionToken')) {
+        if (github_callback !== null && !$cookies.get('SessionToken')) {
             //var url =  "http://localhost:3000/api/github?code=" + github_callback[1] + "&callback=JSON_CALLBACK";
             var url =  "http://jalpc-a.leanapp.cn/api/github?code=" + github_callback[1] + "&callback=JSON_CALLBACK";
             $http.jsonp(url).success(function (data) {
