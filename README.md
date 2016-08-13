@@ -64,7 +64,7 @@ Replace your website domain in **CNAME** file.
 
 ## Features
 
-### Login with github
+### Login with github account
 
 You can login with github account,the web application use [leancloud engine](https://github.com/Jack614/Jalpc-A-engine) to realize it.when you logined in,your username in my blog is `gh_<your_github_username>`.
 
